@@ -1,96 +1,107 @@
-Python Security Log Analyzer
+# Python Security Log Analyzer
 
-A professional Python tool designed to analyze failed login attempts, detect potential brute-force attacks, and generate structured reports. This project demonstrates progressive learning from basic scripting to professional, portfolio-ready automation, mapping closely to CIS-30A learning outcomes and cybersecurity workflows.
+## Overview
+The Python Security Log Analyzer is a cybersecurity-focused Python project designed to **analyze authentication log files** and detect failed login attempts.
 
-Project Overview
+This project is part of a professional **Python/DevOps/Cybersecurity portfolio** and demonstrates scripting, automation, log analysis, and modular programming skills relevant to:
+- Cybersecurity operations
+- Security monitoring
+- DevOps automation
+- Linux system administration
+- Python programming fundamentals
 
-The goal of this project is to simulate a real-world security log analysis workflow, suitable for:
+The project is designed to be **portfolio-ready and CPL-friendly**, showing clear progression from basic scripting to professional, production-like tooling.
 
-Portfolio development
-CPL (Credit for Prior Learning) submission at RCC
-Internship/job readiness in DevOps and cybersecurity
+---
 
-The analyzer reads log files, identifies failed login attempts, aggregates results by IP, flags suspicious activity, and exports structured reports for further analysis.
+## Version History
 
-Version History
-Version	Description	Key Features	Design Decisions
-v1 – Basic Log Analyzer	Initial proof-of-concept	Reads logs, detects failed logins, counts total failures	Simple procedural code to demonstrate Python fundamentals (loops, conditionals, file I/O). No IP extraction yet to keep initial scope manageable.
-v2 – IP-Based Detection	Enhanced security detection	Extracts IP addresses, counts failures per IP, basic brute-force detection	Regex was introduced to identify IP addresses; dictionaries (defaultdict) used for efficient counting. Modular functions were optional at this stage.
-v3 – Professional CLI Tool	Portfolio-ready scripting	Command-line interface, modular functions, CSV reporting, terminal summary	Structured into functions for readability and reusability. CSV output introduced to simulate real-world SOC reporting. CLI allows for flexible usage beyond a single hardcoded log file.
-v4 – Polished & Portfolio-Ready	Full-featured, professional version	CLI with optional JSON export, enhanced error handling, structured terminal summary, comprehensive commentary	Added JSON export to provide multiple data formats for automation or DevOps integration. Functions are fully modular. Error handling ensures robustness. Extensive commentary explains why each element was implemented in this way.
-Design Philosophy & Key Decisions
-Modular Functions
-Each major task (reading logs, extracting IPs, analyzing, exporting) has its own function.
-Reason: Encourages reusable, maintainable code—a practice expected in real-world DevOps or SOC scripts.
-Regex for IP Extraction
-Used a simple IPv4 regex to parse failed login lines.
-Reason: Regex is efficient for pattern matching; avoids manually splitting strings, reducing errors.
-Command-Line Interface
-Accepts log file, threshold, and optional JSON export.
-Reason: CLI scripting is standard in security operations, allowing automation and batch processing.
-CSV & JSON Export
-CSV provides human-readable reporting; JSON allows integration with other tools.
-Reason: Simulates real-world reporting pipelines; shows versatility for DevOps workflows.
-Error Handling
-Graceful exit if log file is missing.
-Reason: Real-world scripts must handle unexpected inputs without crashing, demonstrating robustness.
-Terminal Summary & Alerts
-Provides clear, formatted output highlighting suspicious IPs.
-Reason: Enables immediate interpretation by a SOC analyst, simulating professional utility.
-Installation
-Clone the repository:
-git clone https://github.com/faithfulstudent/python-security-log-analyzer.git
-cd python-security-log-analyzer
-Ensure Python 3.x is installed.
-No additional packages are required (uses Python standard library: re, csv, json, sys, collections).
-Usage Instructions
-Basic Usage
-python main_v4.py sample.log
-Reads sample.log
-Default brute-force threshold: 3
-Outputs terminal summary and failed_logins.csv
-Custom Threshold
-python main_v4.py sample.log 2
-Sets brute-force threshold to 2 failed attempts
-Enable JSON Export
-python main_v4.py sample.log 2 yes
-Exports failed_logins.json in addition to CSV
-Sample Input / Output
+| Version | Description | Key Features | Design Decisions |
+|---------|------------|--------------|-----------------|
+| **v1 – Basic Log Analyzer** | Initial proof-of-concept | Reads logs, detects failed logins, counts total failures | Simple procedural code to demonstrate Python fundamentals. Minimal functionality to establish a working base. |
+| **v2 – IP-Based Detection** | Added IP detection | Extracts IPs, counts failures per IP | Regex used for pattern matching. Dictionaries introduced for counting per IP. Demonstrates modular thinking. |
+| **v3 – CLI Tool with CSV** | Professional scripting | Command-line interface, modular functions, CSV reporting, terminal summary | CLI added for flexibility. Modular functions improve readability. CSV export simulates real-world reporting. |
+| **v4 – Polished, Portfolio-Ready** | Full-featured version | CLI with optional JSON export, robust error handling, enhanced terminal summary, extensive commentary | JSON export added for automation integration. Functions fully modular. Error handling ensures robustness. Commentary explains **why design choices were made**. Portfolio-ready for CPL or internships. |
 
-Input (sample.log):
+---
 
-Failed password for invalid user admin from 192.168.1.10 port 22 ssh2
-Failed password for invalid user guest from 192.168.1.20 port 22 ssh2
-Failed password for invalid user admin from 192.168.1.10 port 22 ssh2
+## Key Features & Design Choices
+1. **Modular Functions** – Each task (read logs, extract IPs, analyze, export) is in its own function.  
+   *Reason:* Encourages reusable, maintainable code, aligned with professional practices.
 
-Terminal Output:
+2. **Regex for IP Extraction** – Efficient and reliable for pattern matching.  
+   *Reason:* Avoids manual string parsing, reduces errors, mirrors real-world security scripts.
 
-==============================
+3. **Command-Line Interface (CLI)** – Users specify log files, thresholds, and export options.  
+   *Reason:* CLI is standard in security automation and DevOps workflows.
+
+4. **CSV & JSON Export** – CSV for human-readable reporting; JSON for automated processing.  
+   *Reason:* Demonstrates professional reporting capabilities and workflow integration.
+
+5. **Error Handling** – Program exits gracefully on invalid input.  
+   *Reason:* Robust scripts are essential for real-world deployment.
+
+6. **Terminal Summary & Alerts** – Highlights suspicious IPs based on threshold.  
+   *Reason:* Provides immediate insights, simulating SOC analyst reporting.
+
+---
+
+## Project Structure
+python-security-log-analyzer/
+│
+├── main.py # Main Python script
+├── sample.log # Sample log file
+└── README.md # Project documentation
+
+---
+
+## Sample Log Entries
+Jan 10 10:00:01 sshd Failed password for root from 192.168.1.10
+Jan 10 10:00:05 sshd Failed password for admin from 192.168.1.10
+Jan 10 10:01:00 sshd Accepted password for user from 192.168.1.20
+Jan 10 10:02:00 sshd Failed password for root from 192.168.1.30
+
+## Example Output from Version 4
+
+==================================
 SECURITY LOG ANALYSIS REPORT
-==============================
 
 Total failed logins: 3
 
 Failed logins by IP:
-- 192.168.1.10: 2 failed attempts
-- 192.168.1.20: 1 failed attempts
+
+-192.168.1.10: 2 failed attempts
+-192.168.1.20: 1 failed attempt
 
 Potential brute-force attacks (threshold: 2):
-- ALERT: 192.168.1.10 - 2 failed attempts
+
+-ALERT: 192.168.1.10 - 2 failed attempts
 
 [INFO] CSV report exported as 'failed_logins.csv'
-[INFO] JSON report exported as 'failed_logins.json'  # if JSON flag is enabled
-Skills Demonstrated / Learning Outcomes
-Python Fundamentals: loops, conditionals, variables, functions
-File I/O: reading from and writing to logs, CSV, JSON
-Regex: pattern matching for IP extraction
-Data Structures: dictionaries for counting occurrences
-Modular Programming: reusable functions, CLI arguments
-Error Handling: robust script behavior
-Cybersecurity Relevance: log analysis, brute-force detection, SOC-style reporting
-Portfolio & CPL Ready: professional structure, commentary, multiple output formats
-Future Work / Version 5 Ideas
-Containerize the tool using Docker for portability
-Add unit tests with pytest to demonstrate test-driven development
-Integrate a small dashboard (Flask or Streamlit) for visual analysis
-Expand log parsing to real /var/log/auth.log files on Linux systems
+[INFO] JSON report exported as 'failed_logins.json'
+
+---
+
+## Learning Objectives / Skills Demonstrated
+- **Python fundamentals:** variables, loops, conditionals, functions  
+- **File I/O:** reading logs, writing CSV/JSON  
+- **Regex:** pattern matching for IPs  
+- **Data structures:** dictionaries for counting failed attempts  
+- **Modular programming:** reusable, maintainable code  
+- **Error handling:** graceful handling of invalid inputs  
+- **CLI scripting:** command-line interface for professional workflow  
+- **Cybersecurity relevance:** failed login detection, brute-force alerts  
+- **Portfolio/CPL readiness:** commentary, structured code, multiple outputs
+
+---
+
+## Future Work / Version 5 Ideas
+- Docker containerization for portability  
+- Unit tests with `pytest` for professional validation  
+- Small dashboard (Flask/Streamlit) for visualization  
+- Expanded Linux `auth.log` parsing and SIEM-style integration
+
+---
+
+## Author
+GitHub: [Umar Love](https://github.com/faithfulstudent)
